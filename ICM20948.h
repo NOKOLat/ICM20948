@@ -34,8 +34,13 @@ public:
 		uint8_t PWR_MGMT_2 = 0x07;
 		uint8_t INT_PIN_CFG = 0x0F;
 		uint8_t BANK_SEL = 0x7F;
+		uint8_t ACCEL_SAMPLE_DIV = 0x10;
+		uint8_t ACCEL_SAMPLE_DIV_2 = 0x11;
 		uint8_t ACCEL_CONFIG = 0x14;
+		uint8_t ACCEL_CONFIG_2 = 0x15;
+		uint8_t GYRO_SAMPLE_DIV = 0x0;
 		uint8_t GYRO_CONFIG = 0x01;
+		uint8_t GYRO_CONFIG_2 = 0x02;
 		uint8_t INT_ENABLE = 0x11;
 		uint8_t REG_ACCEL_H[3]={0x2D,0x2F,0x31};
 		uint8_t REG_ACCEL_L[3]={0x2E,0x30,0x32};
