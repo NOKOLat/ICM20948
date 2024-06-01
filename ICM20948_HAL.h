@@ -16,11 +16,12 @@ class ICM20948_HAL: public ICM20948 {
 public:
 	ICM20948_HAL(I2C_HandleTypeDef *hi2c,Address address)
 	:ICM20948(address),hi2c(hi2c){}
+
+	void memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1) override;
+	void memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1) override;
 private:
 	 I2C_HandleTypeDef *hi2c;
 
-	void memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1);
-	void memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1);
 };
 
 #endif /* USE_HAL_DRIVER */

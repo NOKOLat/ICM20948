@@ -72,6 +72,9 @@ public:
 	void intPinConfig(uint8_t value);
 	void intenable(uint8_t value=1);
 
+	virtual void memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1){}
+	virtual void memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1){}
+
 	const uint8_t DISABLE_SENSORS=0x3F;
 	const uint8_t ENABLE_SENSORS=0x00;
 	const uint8_t BIT_H_RESET=0x80;
@@ -88,8 +91,6 @@ protected:
 //	const float GYRO_SENSITIVITY[4]={131,65.5,32.8,16.4};
 
 private:
-	virtual void memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1){}
-	virtual void memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1){}
 };
 
 #endif /* INC_ICM20948_H_ */
