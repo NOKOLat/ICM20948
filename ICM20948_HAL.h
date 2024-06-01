@@ -8,6 +8,8 @@
 #ifndef ICM20948_ICM20948_HAL_H_
 #define ICM20948_ICM20948_HAL_H_
 
+#ifdef USE_HAL_DRIVER
+
 #include "ICM20948.h"
 
 class ICM20948_HAL: public ICM20948 {
@@ -20,5 +22,7 @@ private:
 	void memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1);
 	void memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1);
 };
+
+#endif /* USE_HAL_DRIVER */
 
 #endif /* ICM20948_ICM20948_HAL_H_ */
