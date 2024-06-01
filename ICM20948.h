@@ -28,25 +28,6 @@ public:
 		SENS_2000,
 	};
 
-	const struct{
-		uint8_t WHO_AM_I = 0x00;
-		uint8_t PWR_MGMT_1 = 0x06;
-		uint8_t PWR_MGMT_2 = 0x07;
-		uint8_t INT_PIN_CFG = 0x0F;
-		uint8_t BANK_SEL = 0x7F;
-		uint8_t ACCEL_SAMPLE_DIV = 0x10;
-		uint8_t ACCEL_SAMPLE_DIV_2 = 0x11;
-		uint8_t ACCEL_CONFIG = 0x14;
-		uint8_t ACCEL_CONFIG_2 = 0x15;
-		uint8_t GYRO_SAMPLE_DIV = 0x0;
-		uint8_t GYRO_CONFIG = 0x01;
-		uint8_t GYRO_CONFIG_2 = 0x02;
-		uint8_t INT_ENABLE = 0x11;
-		uint8_t REG_ACCEL_H[3]={0x2D,0x2F,0x31};
-		uint8_t REG_ACCEL_L[3]={0x2E,0x30,0x32};
-		uint8_t REG_GYRO_H[3]={0x33,0x35,0x37};
-		uint8_t REG_GYRO_L[3]={0x34,0x36,0x38};
-	}REGISTER;
 	struct REGISTER{
 		enum class BANK0: uint8_t{
 			WHO_AM_I = 0,
@@ -168,9 +149,6 @@ public:
 	bool gyroConfig(const GyroSensitivity fssel,const bool enableDLPF,const uint8_t configDLPF);
 	void intPinConfig(uint8_t value);
 	void intenable(uint8_t value=1);
-
-	virtual void memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1){}
-	virtual void memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1){}
 
 	const uint8_t DISABLE_SENSORS=0x3F;
 	const uint8_t ENABLE_SENSORS=0x00;
