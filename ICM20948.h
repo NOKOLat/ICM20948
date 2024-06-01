@@ -84,7 +84,8 @@ protected:
 	AccelSensitivity _accelsensitivity;
 	GyroSensitivity _gyrosensitivity;
 	const float ACCEL_SENSITIVITY[4]={16384.0,8192.0,4096.0,2048.0};
-	const float GYRO_SENSITIVITY[4]={131,65.5,32.8,16.4};
+	const float GYRO_SENSITIVITY[4]={7509.6,3754.8,1877.4,938.71};
+//	const float GYRO_SENSITIVITY[4]={131,65.5,32.8,16.4};
 
 private:
 	virtual void memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1){}
