@@ -21,6 +21,12 @@ void ICM20948::pwrmgmt2(uint8_t data){
 	 memWrite(REGISTER.PWR_MGMT_2, &data);
 }
 
+void ICM20948::reset(){
+	uint8_t n=0b1<<7;
+	memWrite(REGISTER.PWR_MGMT_1, &n);
+	HAL_Delay(10);
+}
+
 bool ICM20948::changeUserBank(const uint8_t bank){
 	if(bank>3 || bank<0){
 		return false;

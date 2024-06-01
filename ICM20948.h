@@ -60,7 +60,7 @@ public:
 
 	void pwrmgmt1(uint8_t data);
 	void pwrmgmt2(uint8_t data);
-	void reset(){};
+	void reset();
 	bool changeUserBank(const uint8_t bank);
 	bool accelConfig(const AccelSensitivity fssel,const bool enableDLPF,const uint8_t configDLPF);
 	bool gyroConfig(const GyroSensitivity fssel,const bool enableDLPF,const uint8_t configDLPF);
