@@ -66,60 +66,73 @@ bool ICM20948::gyroConfig(const GyroSensitivity fssel,const bool enableDLPF,cons
 
 }
 
+void ICM20948::readAccel(){
+	memRead(REGISTER::BANK0::ACCEL_XOUT_H, (uint8_t*)rawAccel.data(),6);
+	requireCalcAccel = true;
+}
+
+void ICM20948::readGyro(){
+	memRead(REGISTER::BANK0::GYRO_XOUT_H, (uint8_t*)rawGyro.data(),6);
+	requireCalcGyro = true;
+}
+
+void ICM20948::readIMU(){
+	int16_t buf[6]={};
+	memRead(REGISTER::BANK0::ACCEL_XOUT_H, (uint8_t*)buf,12);
+	for(uint8_t n=0; n<3; n++){
+		rawAccel[n]=((int16_t)buf[2*n]<<8 | (int16_t)buf[2*n+1]);
+		rawGyro[n] = (int16_t)buf[2*n+6]<<8 | (int16_t)buf[2*n+1+6];
+	}
+	requireCalcAccel = true;
+	requireCalcGyro = true;
+}
+
 float ICM20948::getAccel(AXSIS axsis){
-	int8_t buf[2];
-	memRead((REGISTER::BANK0)((uint8_t)REGISTER::BANK0::ACCEL_XOUT_H+(uint8_t)axsis*2),(uint8_t*)buf, 2);
+	if(requireCalcAccel){
+		for(uint8_t n=0; n<3; n++){
+			accel[n] = calculateAccel(rawAccel[n]);
+		}
+		requireCalcAccel = false;
+	}
 
-	int16_t accel=(int16_t)buf[0]<<8 | (int16_t)buf[1];
-
-	return (float)accel/ACCEL_SENSITIVITY[(uint8_t)_accelsensitivity];
+	return accel[(uint8_t)axsis];
 }
 
 float ICM20948::getGyro(AXSIS axsis){
-	int8_t buf[2];
-	memRead((REGISTER::BANK0)((uint8_t)REGISTER::BANK0::GYRO_XOUT_H+(uint8_t)axsis*2),(uint8_t*)buf, 2);
+	if(requireCalcGyro){
+		for(uint8_t n=0; n<3; n++){
+			gyro[n] = calculateGyro(rawGyro[n]);
+		}
+		requireCalcGyro = false;
+	}
 
-	int16_t gyro=(int16_t)buf[0]<<8 | (int16_t)buf[1];
-
-	return (float)gyro/GYRO_SENSITIVITY[(uint8_t)_gyrosensitivity];
+	return gyro[(uint8_t)axsis];
 }
 
-void ICM20948::getAccelBurst(std::array<float,3> &value){
-	const uint8_t headRegAddr = (uint8_t)REGISTER::BANK0::ACCEL_XOUT_H;
-	uint8_t buffer[6]={};
-
-	memRead(headRegAddr, (uint8_t*)buffer,6);
-
-	for(uint8_t n=0;n<3;n++){
-		value[n] = (float)((int16_t)buffer[2*n]<<8 | (int16_t)buffer[2*n+1])/ACCEL_SENSITIVITY[(uint8_t)_accelsensitivity];
+void ICM20948::getAccel(std::array<float,3> &value){
+	if(requireCalcAccel){
+		for(uint8_t n=0; n<3; n++){
+			accel[n] = calculateAccel(rawAccel[n]);
+		}
+		requireCalcAccel = false;
 	}
+
+	value = accel;
 }
 
-void ICM20948::getGyroBurst(std::array<float,3> &value){
-	const uint8_t headRegAddr = (uint8_t)REGISTER::BANK0::GYRO_XOUT_H;
-	uint8_t buffer[6]={};
-
-	memRead(headRegAddr, (uint8_t*)buffer, 6);
-
-	for(uint8_t n=0;n<3;n++){
-		value[n] = (float)((int16_t)buffer[2*n]<<8 | (int16_t)buffer[2*n+1])/GYRO_SENSITIVITY[(uint8_t)_gyrosensitivity];
+void ICM20948::getGyro(std::array<float,3> &value){
+	if(requireCalcGyro){
+		for(uint8_t n=0; n<3; n++){
+			gyro[n] = calculateGyro(rawGyro[n]);
+		}
+		requireCalcGyro = false;
 	}
+	value = gyro;
 }
 
-void ICM20948::get6ValueBurst(std::array<float,3> &accel, std::array<float,3> &gyro){
-	const uint8_t headRegAddr = (uint8_t)REGISTER::BANK0::ACCEL_XOUT_H;
-	uint8_t buffer[12]={};
-
-	memRead(headRegAddr, buffer, 12);
-
-	for(uint8_t n=0;n<3;n++){
-		int16_t tmp = (int16_t)buffer[2*n]<<8 | (int16_t)buffer[2*n+1];
-		accel[n] = (float)(tmp)/ACCEL_SENSITIVITY[(uint8_t)_accelsensitivity];
-	}
-	for(uint8_t n=0;n<3;n++){
-		int16_t tmp = (int16_t)buffer[2*n+6]<<8 | (int16_t)buffer[2*n+1+6];
-		gyro[n] = (float)(tmp)/GYRO_SENSITIVITY[(uint8_t)_gyrosensitivity];
-	}
+void ICM20948::getIMU(std::array<float,3> &accel, std::array<float,3> &gyro){
+	getAccel(accel);
+	getGyro(gyro);
 }
 
 void ICM20948::intPinConfig(uint8_t value){
@@ -141,4 +154,12 @@ void ICM20948::memRead(REGISTER reg, uint8_t *pData, uint8_t length){
 		changeUserBank(reg.bank);
 	}
 	memRead(reg.address, pData, length);
+}
+
+float ICM20948::calculateAccel(const int16_t raw){
+	return raw / ACCEL_SENSITIVITY[(uint8_t)_accelsensitivity];
+}
+
+float ICM20948::calculateGyro(const int16_t raw){
+	return raw / GYRO_SENSITIVITY[(uint8_t)_gyrosensitivity];
 }

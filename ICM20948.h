@@ -135,11 +135,22 @@ public:
 
 
 	uint8_t whoami();
+
+	//read IMU output registers and store into raw values array
+	void readAccel();
+	void readGyro();
+	void readIMU();
+
+	//return the raw values array
+	std::array<int16_t, 3> getRawAccel(){return rawAccel;}
+	std::array<int16_t, 3> getRawGyro(){return rawGyro;}
+
+	//calculate acceles and angular or one of them velosity from raw values array and return the result.
 	float getAccel(AXSIS axsis);
 	float getGyro(AXSIS axsis);
-	void getAccelBurst(std::array<float,3> &value);
-	void getGyroBurst(std::array<float,3> &value);
-	void get6ValueBurst(std::array<float,3> &accel, std::array<float,3> &gyro);
+	void getAccel(std::array<float,3> &value);
+	void getGyro(std::array<float,3> &value);
+	void getIMU(std::array<float,3> &accel, std::array<float,3> &gyro);
 
 	void pwrmgmt1(uint8_t data);
 	void pwrmgmt2(uint8_t data);
@@ -172,6 +183,17 @@ protected:
 private:
 	virtual void memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1)=0;
 	virtual void memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1)=0;
+
+	std::array<int16_t,3> rawAccel;
+	std::array<int16_t,3> rawGyro;
+	std::array<float,3> accel;
+	std::array<float,3> gyro;
+
+	bool requireCalcAccel = false;
+	bool requireCalcGyro = false;
+
+	float calculateAccel(const int16_t raw);
+	float calculateGyro(const int16_t raw);
 };
 
 #endif /* INC_ICM20948_H_ */
