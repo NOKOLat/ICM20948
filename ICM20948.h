@@ -173,7 +173,7 @@ public:
 protected:
 
 	const Address address;
-	REGISTER::BANK bank;
+	REGISTER::BANK currentBank;
 	AccelSensitivity _accelsensitivity;
 	GyroSensitivity _gyrosensitivity;
 	const float ACCEL_SENSITIVITY[4]={16384.0,8192.0,4096.0,2048.0};
