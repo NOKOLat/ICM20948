@@ -110,13 +110,13 @@ public:
 			BANK3,
 		};
 		
-	    uint8_t address;
-	    BANK bank;
-
+	    REGISTER():bank(BANK::BANK0),address(0){}
 	    REGISTER(BANK0 arg):bank(BANK::BANK0),address((uint8_t)arg){}
 	    REGISTER(BANK1 arg):bank(BANK::BANK1),address((uint8_t)arg){}
 	    REGISTER(BANK2 arg):bank(BANK::BANK2),address((uint8_t)arg){}
-	    REGISTER():bank(BANK::BANK0),address(0){}
+
+	    BANK bank;
+	    uint8_t address;
 	};
 
 	enum class Address:uint8_t{
