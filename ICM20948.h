@@ -182,8 +182,8 @@ protected:
 //	const float GYRO_SENSITIVITY[4]={131,65.5,32.8,16.4};
 
 private:
-	virtual void memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1)=0;
-	virtual void memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1)=0;
+	virtual void __memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1)=0;
+	virtual void __memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1)=0;
 
 	std::array<int16_t,3> rawAccel;
 	std::array<int16_t,3> rawGyro;

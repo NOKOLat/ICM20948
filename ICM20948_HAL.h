@@ -21,8 +21,8 @@ private:
 	 I2C_HandleTypeDef *hi2c;
 
 
-	void memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1);
-	void memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1);
+	void __memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1);
+	void __memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1);
 };
 
 #endif /* USE_HAL_DRIVER */

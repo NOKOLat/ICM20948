@@ -147,13 +147,13 @@ void ICM20948::memWrite(REGISTER reg, uint8_t *pData, uint8_t length){
 	if(this->currentBank != reg.bank){
 		changeUserBank(reg.bank);
 	}
-	memWrite(reg.address, pData, length);
+	__memWrite(reg.address, pData, length);
 }
 void ICM20948::memRead(REGISTER reg, uint8_t *pData, uint8_t length){
 	if(this->currentBank != reg.bank){
 		changeUserBank(reg.bank);
 	}
-	memRead(reg.address, pData, length);
+	__memRead(reg.address, pData, length);
 }
 
 float ICM20948::calculateAccel(const int16_t raw){
