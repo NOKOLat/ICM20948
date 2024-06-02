@@ -22,16 +22,15 @@ public:
 		icm20948->accelConfig(ICM20948::AccelSensitivity::SENS_2G,true,7);
 		icm20948->gyroConfig(ICM20948::GyroSensitivity::SENS_500, true, 7);
 
-		icm20948->changeUserBank(2);
 		uint8_t tmp=3;
-		icm20948->memWrite(icm20948->REGISTER.GYRO_SAMPLE_DIV, &tmp);
+		icm20948->memWrite(ICM20948::REGISTER::BANK2::GYRO_SMPLRT_DIV, tmp);
 		tmp=4;
-		icm20948->memWrite(icm20948->REGISTER.GYRO_CONFIG_2, &tmp);
+		icm20948->memWrite(ICM20948::REGISTER::BANK2::GYRO_CONFIG_2, tmp);
 		tmp=0;
-		icm20948->memWrite(icm20948->REGISTER.ACCEL_CONFIG_2, &tmp);
+		icm20948->memWrite(ICM20948::REGISTER::BANK2::ACCEL_CONFIG_2, tmp);
 		tmp=3;
-		icm20948->memWrite(icm20948->REGISTER.ACCEL_SAMPLE_DIV_2, &tmp);
-		icm20948->changeUserBank(0);
+		icm20948->memWrite(ICM20948::REGISTER::BANK2::ACCEL_SMPLRT_DIV_2, tmp);
+		icm20948->changeUserBank(ICM20948::REGISTER::BANK::BANK0);
 
 		icm20948->pwrmgmt1(0x01);
 		icm20948->intPinConfig(0b00010000);
