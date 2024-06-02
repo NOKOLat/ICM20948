@@ -169,6 +169,7 @@ public:
 	const uint8_t BIT_INT_OPEN=0x40;
 
 	void memWrite(REGISTER reg, uint8_t *pData, uint8_t length = 1);
+	void memWrite(REGISTER reg, uint8_t data){memWrite(reg,&data);}
 	void memRead(REGISTER reg, uint8_t *pData, uint8_t length = 1);
 protected:
 
