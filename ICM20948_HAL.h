@@ -16,6 +16,9 @@ class ICM20948_HAL: public ICM20948 {
 public:
 	ICM20948_HAL(I2C_HandleTypeDef *hi2c,Address address)
 	:ICM20948(address),hi2c(hi2c){}
+	I2C_HandleTypeDef *getI2CHandller(){
+		return hi2c2;
+	}
 
 private:
 	 I2C_HandleTypeDef *hi2c;
