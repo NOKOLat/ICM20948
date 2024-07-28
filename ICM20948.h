@@ -159,7 +159,7 @@ public:
 	bool accelConfig(const AccelSensitivity fssel,const bool enableDLPF,const uint8_t configDLPF);
 	bool gyroConfig(const GyroSensitivity fssel,const bool enableDLPF,const uint8_t configDLPF);
 	void intPinConfig(uint8_t value);
-	void intenable(uint8_t value=1);
+	void intenable1(uint8_t value=1);
 
 	const uint8_t DISABLE_SENSORS=0x3F;
 	const uint8_t ENABLE_SENSORS=0x00;

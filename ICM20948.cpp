@@ -139,8 +139,8 @@ void ICM20948::intPinConfig(uint8_t value){
 	memWrite(REGISTER::BANK0::INT_PIN_CFG, &value);
 }
 
-void ICM20948::intenable(uint8_t value){
-	memWrite(REGISTER::BANK0::INT_ENABLE, &value);
+void ICM20948::intenable1(uint8_t value){
+	memWrite(REGISTER::BANK0::INT_ENABLE_1, &value);
 }
 
 void ICM20948::memWrite(REGISTER reg, uint8_t *pData, uint8_t length){
