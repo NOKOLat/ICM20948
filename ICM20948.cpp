@@ -77,7 +77,7 @@ void ICM20948::readGyro(){
 }
 
 void ICM20948::readIMU(){
-	int16_t buf[6]={};
+	uint8_t buf[12]={};
 	memRead(REGISTER::BANK0::ACCEL_XOUT_H, (uint8_t*)buf,12);
 	for(uint8_t n=0; n<3; n++){
 		rawAccel[n]=((int16_t)buf[2*n]<<8 | (int16_t)buf[2*n+1]);
