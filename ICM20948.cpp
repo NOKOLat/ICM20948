@@ -29,7 +29,7 @@ void ICM20948::reset(){
 
 bool ICM20948::changeUserBank(REGISTER::BANK bank){
 	uint8_t data=(uint8_t)bank<<4;
-	memWrite(REGISTER::BANK0::REG_BANK_SEL, &data);
+	__memWrite((uint8_t)REGISTER::BANK0::REG_BANK_SEL, &data);
 	return true;
 }
 
