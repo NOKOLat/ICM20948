@@ -171,16 +171,19 @@ public:
 	void memWrite(REGISTER reg, uint8_t *pData, uint8_t length = 1);
 	void memWrite(REGISTER reg, uint8_t data){memWrite(reg,&data);}
 	void memRead(REGISTER reg, uint8_t *pData, uint8_t length = 1);
+
+	const float ACCEL_SENSITIVITY[4]={16383.5,8191.75,4095.875,2047.9375};
+
+	//coefficient for conversion from raw value to radian per sec.
+	const float GYRO_SENSITIVITY[4]={7509.643229221,3754.82161461,1877.410807305,938.705403653};
+//	const float GYRO_SENSITIVITY[4]={131.068,65.534,32.767,16.3835};
+
 protected:
 
 	const Address address;
 	REGISTER::BANK currentBank;
 	AccelSensitivity _accelsensitivity;
 	GyroSensitivity _gyrosensitivity;
-	const float ACCEL_SENSITIVITY[4]={16384.0,8192.0,4096.0,2048.0};
-	const float GYRO_SENSITIVITY[4]={7509.6,3754.8,1877.4,938.71};
-//	const float GYRO_SENSITIVITY[4]={131,65.5,32.8,16.4};
-
 private:
 	virtual void __memWrite(uint8_t memAddress, uint8_t *pData, uint8_t length=1)=0;
 	virtual void __memRead(uint8_t memAddress, uint8_t *pData, uint8_t length=1)=0;
