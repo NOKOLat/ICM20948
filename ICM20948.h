@@ -172,7 +172,7 @@ public:
 	void memWrite(REGISTER reg, uint8_t data){memWrite(reg,&data);}
 	void memRead(REGISTER reg, uint8_t *pData, uint8_t length = 1);
 
-	const float ACCEL_SENSITIVITY[4]={16383.5,8191.75,4095.875,2047.9375};
+	const float ACCEL_SENSITIVITY[4]={16384,8192,4096,2048};
 
 	//coefficient for conversion from raw value to radian per sec.
 	const float GYRO_SENSITIVITY[4]={7509.643229221,3754.82161461,1877.410807305,938.705403653};
